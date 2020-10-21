@@ -47,7 +47,7 @@ def createParser():
         type = str,
         help = "Location of openmvs. Default: /opt/openmvs")
     optional.add_argument("--video",
-        action = str,
+        type = str,
         help = "Use video file as input images")
 
     openmvg = parser.add_argument_group("OpenMVG")
