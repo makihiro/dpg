@@ -46,6 +46,9 @@ def createParser():
     optional.add_argument("--openmvs",
         type = str,
         help = "Location of openmvs. Default: /opt/openmvs")
+    optional.add_argument("--video",
+        action = str,
+        help = "Use video file as input images")
 
     openmvg = parser.add_argument_group("OpenMVG")
     openmvg.add_argument("--colorize",
@@ -193,6 +196,17 @@ def createCommands(args):
 
     if args.openmvs != None:
         openmvsBin = os.path.join(args.openmvs, "bin", "OpenMVS")
+
+    # Extract input images from video
+    if args.video != None:
+        ffmpegBin = "/usr/bin"
+        videofile = args.video
+        if not os.path.isabs(videofile):
+            videofile = os.path.join(os.path.abspath("."), videofile)
+        commands.append({
+            "title": "Generate input images from video",
+            "command": [os.path.join(ffmpegBin, "ffmpeg"),  "-i", videofile, "-q:v", "1", "-vcodec", "mjpeg", "-r", "30", os.path.join(inputDirectory, "image_%06d.jpg")]
+        })
 
     # Recompute
     if args.recompute:

@@ -29,6 +29,12 @@ docker run -v /tmp/example:/datasets --rm -it spedenaave/dpg
 pipeline.py --input /datasets/images --output /datasets/output --sfm-type incremental --geomodel f --run-openmvg --run-openmvs
 ```
 
+```
+docker build -t dpg .
+docker run -v /tmp/example:/datasets --rm -it dpg
+pipeline.py --video /datasets/video.mp4 --input /datasets/images --output /datasets/output --sfm-type incremental --geomodel f --run-openmvg --run-openmvs
+```
+
 You should now have a reconstructed model at /tmp/example/omvs folder. Use meshlab or something similar to open it. The end result should look something like this:
 ![Example 1](https://i.imgur.com/CpSs2SE.jpg)
 
@@ -69,6 +75,9 @@ You should now have a reconstructed model at /tmp/example/omvs folder. Use meshl
         
         --openmvs [path]
             Set OpenMVS install location
+
+        --video [path]
+            Use video file for input images
 
     OpenMVG
 
